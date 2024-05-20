@@ -1,18 +1,18 @@
 import React from 'react';
-import ColumnProvider from '../context/ColumnProvider';
+import ContextProvider from '../context/ContextProvider';
 import { statuses } from '../constants';
-import Column from '../components/Column';
+import Status from '../components/Status';
 import Header from '../components/Header';
 
 const KanbanBoard = () => (
-  <ColumnProvider>
+  <ContextProvider>
     <Header />
     <div className="kanban-board">
       {statuses.map((status) => (
-        <Column key={status} title={status} status={status} />
+        <Status key={status} title={status} status={status} />
       ))}
     </div>
-  </ColumnProvider>
+  </ContextProvider>
 );
 
 export default KanbanBoard;

@@ -5,7 +5,7 @@ import useTasks from '../hooks/useTasks';
 import useActions from '../hooks/useActions';
 import { statuses } from '../constants';
 
-const Column = memo(({ title, status }) => {
+const Status = memo(({ title, status }) => {
   const tasks = useTasks(status);
   const { addTask, moveTask, removeTask } = useActions();
   const [inputValue, setInputValue] = useState('');
@@ -72,4 +72,4 @@ const Column = memo(({ title, status }) => {
   );
 });
 
-export default Column;
+export default Status;

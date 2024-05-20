@@ -3,7 +3,7 @@ import { tasksReducer } from '../lib/reducer';
 import { initialState } from '../lib/initialState';
 import { TasksContext, ActionsContext } from './context';
 
-const ColumnProvider = ({ children }) => {
+const ContextProvider = ({ children }) => {
   const [tasks, dispatch] = useReducer(tasksReducer, initialState);
 
   return (
@@ -13,4 +13,4 @@ const ColumnProvider = ({ children }) => {
   );
 };
 
-export default ColumnProvider;
+export default ContextProvider;
