@@ -1,4 +1,4 @@
-import React, { memo, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import Task from './Task';
 import useTasks from '../hooks/useTasks';
 import useActions from '../hooks/useActions';

@@ -3,8 +3,6 @@ import useActions from '../hooks/useActions';
 import { v4 as uuid } from 'uuid';
 
 const AddTask = ({ status }) => {
-  console.log('AddTask status', status);
-
   const { addTask } = useActions();
   const [inputValue, setInputValue] = useState('');
 
@@ -16,7 +14,6 @@ const AddTask = ({ status }) => {
     if (inputValue.trim() === '') {
       return;
     }
-    console.log(inputValue);
     const task = { id: uuid(), title: inputValue };
     addTask(status, task);
     setInputValue('');
