@@ -1,4 +1,4 @@
-import React, { memo, useState } from 'react';
+import React, { memo, useState, useCallback } from 'react';
 import { v4 as uuid } from 'uuid';
 import Task from './Task';
 import useTasks from '../hooks/useTasks';
@@ -6,6 +6,7 @@ import useActions from '../hooks/useActions';
 import { statuses } from '../constants';
 
 const Status = ({ title, status }) => {
+  console.log('Rerender Status ', status);
   const tasks = useTasks(status);
   const { addTask, moveTask, removeTask } = useActions();
   const [inputValue, setInputValue] = useState('');
@@ -23,19 +24,29 @@ const Status = ({ title, status }) => {
     setInputValue('');
   };
 
-  const handleMoveTask = (task, direction) => {
-    const currentIndex = statuses.indexOf(status);
-    let newIndex = currentIndex;
+  const handleMoveTask = useCallback(
+    (task, direction) => {
+      const currentIndex = statuses.indexOf(status);
+      let newIndex = currentIndex;
 
-    if (direction === 'left') {
-      newIndex = Math.max(currentIndex - 1, 0);
-    } else if (direction === 'right') {
-      newIndex = Math.min(currentIndex + 1, statuses.length - 1);
-    }
+      if (direction === 'left') {
+        newIndex = Math.max(currentIndex - 1, 0);
+      } else if (direction === 'right') {
+        newIndex = Math.min(currentIndex + 1, statuses.length - 1);
+      }
 
-    const toStatus = statuses[newIndex];
-    moveTask(status, toStatus, task);
-  };
+      const toStatus = statuses[newIndex];
+      moveTask(status, toStatus, task);
+    },
+    [status, moveTask]
+  );
+
+  const handleRemoveTask = useCallback(
+    (task) => {
+      removeTask(status, task);
+    },
+    [status, removeTask]
+  );
 
   return (
     <div className="column">
@@ -55,7 +66,7 @@ const Status = ({ title, status }) => {
             task={task}
             status={status}
             handleMoveTask={handleMoveTask}
-            handleRemoveTask={() => removeTask(status, task)}
+            handleRemoveTask={handleRemoveTask}
           />
         ))}
       </ul>

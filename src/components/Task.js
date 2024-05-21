@@ -1,14 +1,18 @@
-const Task = ({ task, status, handleMoveTask, handleRemoveTask }) => (
-  <li className="task">
-    {task.title}
-    {status !== 'todo' && (
-      <button onClick={() => handleMoveTask(task, 'left')}>Left</button>
-    )}
-    {status !== 'archived' && (
-      <button onClick={() => handleMoveTask(task, 'right')}>Right</button>
-    )}
-    <button onClick={() => handleRemoveTask()}>Remove</button>
-  </li>
-);
+import { memo } from 'react';
 
-export default Task;
+const Task = ({ task, status, handleMoveTask, handleRemoveTask }) => {
+  return (
+    <li className="task">
+      {task.title}
+      {status !== 'todo' && (
+        <button onClick={() => handleMoveTask(task, 'left')}>Left</button>
+      )}
+      {status !== 'archived' && (
+        <button onClick={() => handleMoveTask(task, 'right')}>Right</button>
+      )}
+      <button onClick={() => handleRemoveTask(task)}>Remove</button>
+    </li>
+  );
+};
+
+export default memo(Task);
