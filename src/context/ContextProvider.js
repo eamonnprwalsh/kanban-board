@@ -1,9 +1,10 @@
 import { useEffect, useReducer } from 'react';
 import { tasksReducer } from '../lib/reducer';
 import { ActionsContext, TasksContext } from './context';
+import { initialState } from '../lib/initialState';
 
 const ColumnProvider = ({ children }) => {
-  const [tasks, dispatch] = useReducer(tasksReducer, {});
+  const [tasks, dispatch] = useReducer(tasksReducer, initialState);
 
   useEffect(() => {
     const storedTasks = localStorage.getItem('tasks');

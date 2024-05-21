@@ -1,28 +1,13 @@
-import React, { memo, useState, useCallback } from 'react';
-import { v4 as uuid } from 'uuid';
+import React, { memo, useCallback } from 'react';
 import Task from './Task';
 import useTasks from '../hooks/useTasks';
 import useActions from '../hooks/useActions';
 import { statuses } from '../constants';
+import AddTask from './AddTask';
 
 const Status = ({ title, status }) => {
-  console.log('Rerender Status ', status);
   const tasks = useTasks(status);
-  const { addTask, moveTask, removeTask } = useActions();
-  const [inputValue, setInputValue] = useState('');
-
-  const handleChange = (event) => {
-    setInputValue(event.target.value);
-  };
-
-  const handleAddTask = () => {
-    if (inputValue.trim() === '') {
-      return;
-    }
-    const task = { id: uuid(), title: inputValue };
-    addTask(status, task);
-    setInputValue('');
-  };
+  const { moveTask, removeTask } = useActions();
 
   const handleMoveTask = useCallback(
     (task, direction) => {
@@ -51,14 +36,7 @@ const Status = ({ title, status }) => {
   return (
     <div className="column">
       <h2>{title}</h2>
-      <label htmlFor="textInput">Enter Text: </label>
-      <input
-        type="text"
-        id="textInput"
-        value={inputValue}
-        onChange={handleChange}
-      />
-      <button onClick={handleAddTask}>Add Task</button>
+      <AddTask status={status} />
       <ul className="task-list">
         {tasks.map((task) => (
           <Task
@@ -74,4 +52,4 @@ const Status = ({ title, status }) => {
   );
 };
 
-export default memo(Status);
+export default Status;
