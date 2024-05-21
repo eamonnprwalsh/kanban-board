@@ -1,10 +1,16 @@
-import { useReducer } from 'react';
+import { useEffect, useReducer } from 'react';
 import { tasksReducer } from '../lib/reducer';
-import { initialState } from '../lib/initialState';
-import { TasksContext, ActionsContext } from './context';
+import { ActionsContext, TasksContext } from './context';
 
-const ContextProvider = ({ children }) => {
-  const [tasks, dispatch] = useReducer(tasksReducer, initialState);
+const ColumnProvider = ({ children }) => {
+  const [tasks, dispatch] = useReducer(tasksReducer, {});
+
+  useEffect(() => {
+    const storedTasks = localStorage.getItem('tasks');
+    if (storedTasks) {
+      dispatch({ type: 'REHYDRATE_TASKS', tasks: JSON.parse(storedTasks) });
+    }
+  }, []);
 
   return (
     <ActionsContext.Provider value={dispatch}>
@@ -13,4 +19,4 @@ const ContextProvider = ({ children }) => {
   );
 };
 
-export default ContextProvider;
+export default ColumnProvider;

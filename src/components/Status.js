@@ -1,23 +1,14 @@
-import React, { memo, useState, useEffect } from 'react';
+import React, { memo, useState } from 'react';
 import { v4 as uuid } from 'uuid';
 import Task from './Task';
 import useTasks from '../hooks/useTasks';
 import useActions from '../hooks/useActions';
 import { statuses } from '../constants';
 
-const Status = memo(({ title, status }) => {
+const Status = ({ title, status }) => {
   const tasks = useTasks(status);
   const { addTask, moveTask, removeTask } = useActions();
   const [inputValue, setInputValue] = useState('');
-  const [previousTaskCount, setPreviousTaskCount] = useState(tasks.length);
-
-  useEffect(() => {
-    console.log('firing useeEffect');
-    if (tasks.length > previousTaskCount) {
-      alert(`Task added to ${title}`);
-    }
-    setPreviousTaskCount(tasks.length);
-  }, [tasks.length, previousTaskCount, title]);
 
   const handleChange = (event) => {
     setInputValue(event.target.value);
@@ -70,6 +61,6 @@ const Status = memo(({ title, status }) => {
       </ul>
     </div>
   );
-});
+};
 
-export default Status;
+export default memo(Status);
